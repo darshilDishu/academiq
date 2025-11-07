@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AcademiQ | Library</title>
+  <style>
+    body { font-family: Arial; background: #f7faff; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px; border: 1px solid #ccc; }
+    th { background: #4a90e2; color: white; }
+    .button { background: #4a90e2; color: white; padding: 5px 10px; border: none; border-radius: 5px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>📚 Library Management</h2>
+  <form method="POST">
+    <input type="text" name="book_name" placeholder="Book Name" required>
+    <input type="text" name="author" placeholder="Author" required>
+    <input type="text" name="subject" placeholder="Subject" required>
+    <button type="submit" class="button">Add Book</button>
+  </form>
+
+  <table>
+    <tr><th>Book</th><th>Author</th><th>Subject</th><th>Status</th><th>Action</th></tr>
+    {% for b in books %}
+    <tr>
+      <td>{{ b.book_name }}</td>
+      <td>{{ b.author }}</td>
+      <td>{{ b.subject }}</td>
+      <td>{{ b.status }}</td>
+      <td>
+        {% if b.status == 'available' %}
+          <a href="{{ url_for('borrow', book_id=b.id) }}" class="button">Borrow</a>
+        {% else %}
+          <a href="{{ url_for('return_book', book_id=b.id) }}" class="button">Return</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <br>
+  <a href="{{ url_for('dashboard') }}" class="button">Back to Dashboard</a>
+</body>
+</html>

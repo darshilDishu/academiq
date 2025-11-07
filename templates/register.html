@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AcademiQ | Register</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; text-align:center; }
+    .container { margin-top: 50px; background: white; padding: 30px; width: 400px; display: inline-block; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    input { width: 90%; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #4a90e2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create New Account</h2>
+    <form method="POST">
+      <input type="text" name="name" placeholder="Full Name" required><br>
+      <input type="text" name="roll_no" placeholder="Roll Number" required><br>
+      <input type="text" name="semester" placeholder="Semester" required><br>
+      <input type="text" name="course" placeholder="Course" required><br>
+      <input type="email" name="email" placeholder="Email" required><br>
+      <input type="password" name="password" placeholder="Password" required><br>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+  </div>
+</body>
+</html>

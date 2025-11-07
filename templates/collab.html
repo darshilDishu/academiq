@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AcademiQ | Collaboration</title>
+  <style>
+    body { font-family: Arial; background: #eaf3ff; }
+    .chat-container { width: 80%; margin: 20px auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px #aaa; }
+    .message { border-bottom: 1px solid #eee; padding: 8px; }
+    .message small { color: gray; }
+    form { margin-top: 20px; }
+    input[type=text] { width: 80%; padding: 8px; }
+    button { padding: 8px 15px; background: #4a90e2; color: white; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>💬 Collaboration Room</h2>
+    <div class="messages">
+      {% for m in messages %}
+      <div class="message">
+        <strong>{{ m.name }}</strong>: {{ m.content }} <br>
+        <small>{{ m.created_at }}</small>
+      </div>
+      {% endfor %}
+    </div>
+
+    <form method="POST">
+      <input type="text" name="message" placeholder="Type a message..." required>
+      <button type="submit">Send</button>
+    </form>
+    <br>
+    <a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+  </div>
+</body>
+</html>

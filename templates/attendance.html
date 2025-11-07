@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Attendance - AcademiQ</title>
+
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    margin: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.8rem;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  .container {
+    width: 90%;
+    max-width: 800px;
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(8px);
+  }
+
+  form {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 70%;
+  }
+
+  button {
+    background: #00b4d8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #0077b6;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+
+  th {
+    background-color: rgba(255,255,255,0.2);
+  }
+
+  .present-btn {
+    background: #38b000;
+  }
+
+  .absent-btn {
+    background: #ef233c;
+  }
+
+  .delete-btn {
+    background: #f94144;
+  }
+
+  .present-btn:hover { background: #2d6a4f; }
+  .absent-btn:hover { background: #9d0208; }
+  .delete-btn:hover { background: #d00000; }
+
+  .percentage {
+    font-weight: bold;
+    color: #90ee90;
+  }
+
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #cfcfcf;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<header>📊 AcademiQ Attendance Tracker</header>
+
+<div class="container">
+  <h2 style="text-align:center;">Mark Attendance</h2>
+
+  <form method="POST" action="/add_subject">
+    <input type="text" name="subject" placeholder="Enter Subject Name" required>
+    <button type="submit">➕ Add Subject</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Subject</th>
+      <th>Attended</th>
+      <th>Total</th>
+      <th>Percentage</th>
+      <th>Actions</th>
+    </tr>
+    {% for sub in attendance %}
+    <tr>
+      <td>{{ sub.subject }}</td>
+      <td>{{ sub.attended }}</td>
+      <td>{{ sub.total }}</td>
+      <td class="percentage">{{ sub.percentage }}%</td>
+      <td>
+        <a href="/mark_present/{{ sub.id }}"><button class="present-btn">✅</button></a>
+        <a href="/mark_absent/{{ sub.id }}"><button class="absent-btn">❌</button></a>
+        <a href="/delete_subject/{{ sub.id }}"><button class="delete-btn">🗑️</button></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<footer>
+  Developed by Aryan & Darshil | Contact: 8168183006 / 9992270930 | academiqsupport@gmail.com
+</footer>
+
+</body>
+</html>

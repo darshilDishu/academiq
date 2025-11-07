@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: academiq_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: example_root_pwd
+      MYSQL_DATABASE: academiq
+      MYSQL_USER: academiq_user
+      MYSQL_PASSWORD: academiq_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    container_name: academiq_web
+    restart: unless-stopped
+    environment:
+      FLASK_ENV: development
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: academiq
+      DB_USER: academiq_user
+      DB_PASSWORD: academiq_pass
+      DB_ROOT_USER: root
+      DB_ROOT_PASSWORD: example_root_pwd
+      INIT_DB: "1"            # set to "0" if you don't want init_academiq.sql auto-run
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  dbdata:

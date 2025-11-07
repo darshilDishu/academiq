@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AcademiQ | Dashboard</title>
+  <style>
+    body { font-family: Arial; background: #e9f2ff; margin: 0; padding: 0; }
+    header { background: #4a90e2; color: white; padding: 15px; text-align: center; }
+    section { padding: 20px; }
+    h3 { color: #333; }
+    .attendance-table, .task-table { width: 100%; border-collapse: collapse; }
+    .attendance-table td, .attendance-table th, .task-table td, .task-table th { border: 1px solid #ddd; padding: 8px; }
+    .attendance-table th, .task-table th { background: #4a90e2; color: white; }
+    .red { color: red; }
+    .blue { color: blue; }
+    .form-inline input { margin-right: 10px; padding: 5px; }
+    .button { background: #4a90e2; color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Welcome back, {{ student.name }}!</h2>
+    <p>Roll No: {{ student.roll_no }} | Semester: {{ student.semester }} | Course: {{ student.course }}</p>
+    <a href="{{ url_for('logout') }}" style="color:white;">Logout</a>
+  </header>
+
+  <section>
+    <h3>📚 Attendance Summary</h3>
+    <form method="POST" action="{{ url_for('attendance') }}" class="form-inline">
+      <input type="text" name="subject" placeholder="Subject" required>
+      <input type="number" name="total" placeholder="Total Lectures" required>
+      <input type="number" name="attended" placeholder="Attended Lectures" required>
+      <button type="submit" class="button">Add</button>
+    </form>
+
+    <table class="attendance-table">
+      <tr><th>Subject</th><th>Total</th><th>Attended</th><th>Percentage</th></tr>
+      {% for a in attendance %}
+      {% set percent = (a.attended_lectures / a.total_lectures * 100) if a.total_lectures > 0 else 0 %}
+      <tr>
+        <td>{{ a.subject }}</td>
+        <td>{{ a.total_lectures }}</td>
+        <td>{{ a.attended_lectures }}</td>
+        <td class="{{ 'red' if percent < 65 else 'blue' }}">{{ "%.2f" % percent }}%</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+
+  <section>
+    <h3>📝 Today's Work</h3>
+    <form method="POST" action="{{ url_for('add_task') }}">
+      <input type="text" name="task_name" placeholder="New Task" required>
+      <button type="submit" class="button">Add Task</button>
+    </form>
+
+    <table class="task-table">
+      <tr><th>Task</th><th>Status</th><th>Action</th></tr>
+      {% for t in tasks %}
+      <tr>
+        <td>{{ t.task_name }}</td>
+        <td>{{ t.status }}</td>
+        <td>
+          {% if t.status == 'pending' %}
+            <a href="{{ url_for('complete_task', task_id=t.id) }}" class="button">Mark Done</a>
+          {% else %}
+            ✅ Completed
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </section>
+
+  <section>
+    <h3>📖 Other Options</h3>
+    <a href="{{ url_for('library') }}">Go to Library</a> | 
+    <a href="{{ url_for('collab') }}">Go to Collaboration Room</a>
+  </section>
+</body>
+</html>

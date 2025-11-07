@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Profile - AcademiQ</title>
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 600px;
+  backdrop-filter: blur(8px);
+}
+.info {
+  text-align: left;
+  margin: 10px 0;
+}
+a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #fff;
+  text-decoration: none;
+  background: #00b4d8;
+  padding: 8px 20px;
+  border-radius: 6px;
+}
+a:hover { background: #0077b6; }
+</style>
+</head>
+<body>
+<h2>👤 Your Profile</h2>
+<div class="container">
+  <div class="info"><strong>Name:</strong> {{ student.name }}</div>
+  <div class="info"><strong>Roll No:</strong> {{ student.roll_no }}</div>
+  <div class="info"><strong>Semester:</strong> {{ student.semester }}</div>
+  <div class="info"><strong>Course:</strong> {{ student.course }}</div>
+  <div class="info"><strong>Email:</strong> {{ student.email }}</div>
+  <a href="/dashboard">⬅ Back to Dashboard</a>
+</div>
+</body>
+</html>
