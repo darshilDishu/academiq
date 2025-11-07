@@ -1,0 +1,15 @@
+mkdir -p docs
+cat > docs/index.html <<'HTML'
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>academiq — Demo</title></head>
+<body>
+  <h1>academiq</h1>
+  <p>Static demo for GitHub Pages (docs/ on main branch).</p>
+</body>
+</html>
+HTML
+
+git add docs/index.html
+git commit -m "Add docs site for GitHub Pages"
+git push origin main
